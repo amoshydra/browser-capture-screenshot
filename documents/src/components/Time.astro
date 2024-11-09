@@ -1,0 +1,14 @@
+<script>
+  const time = document.getElementById("time")!;
+  const render = () => {
+    const d = new Date();
+    time.textContent = d.toLocaleString()
+  };
+
+  render();
+  setInterval(() => {
+    render();
+  }, 1000);
+</script>
+
+<span class="island" id="time" />
