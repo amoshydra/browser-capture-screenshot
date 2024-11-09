@@ -1,0 +1,15 @@
+{
+  "name": "root",
+  "version": "0.0.1",
+  "main": "index.js",
+  "private": true,
+  "author": "amoshydra",
+  "license": "MIT",
+  "scripts": {
+    "start": "yarn workspace documents run start"
+  },
+  "workspaces": [
+    "packages/browser-capture-screenshot",
+    "documents"
+  ]
+}
