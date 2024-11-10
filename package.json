@@ -6,7 +6,8 @@
   "author": "amoshydra",
   "license": "MIT",
   "scripts": {
-    "start": "yarn workspace documents run start"
+    "start": "yarn workspace documents run start",
+    "build:doc": "yarn workspace documents run build"
   },
   "workspaces": [
     "packages/browser-capture-screenshot",
