@@ -5,10 +5,7 @@ description: 'Lorem ipsum dolor sit amet'
 heroImage: '/blog-placeholder-5.jpg'
 ---
 
-Browser Capture Screen utilises browser's
-[`getDisplayMedia`](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getDisplayMedia)
-API to capture screenshot from the page.
-
+Browser Capture Screenshot utilises the [Region Capture API](https://github.com/w3c/mediacapture-region/#summary) to capture screenshot of a given Element from the page.
 
 ```bash
 npm install browser-capture-screen
@@ -16,4 +13,36 @@ npm install browser-capture-screen
 
 import Demo from "../components/Demo.astro";
 
-<Demo />
+<Demo
+  data-value={`
+    import { capture } from "browser-capture-screenshot";
+
+    const screenshot = await capture(demoElement);
+    previewElement.src = screenshot;
+  `}
+/>
+
+<br />
+<br />
+
+## Granular controls
+
+`ScreenshotSession` provides more granular controls:
+
+<Demo
+  data-value={`
+    import { ScreenshotSession } from "browser-capture-screenshot";
+
+    const session = new ScreenshotSession();
+
+    await session.start();
+
+    // capture screenshot 1 second later
+    setTimeout(async () => {
+      const screenshot = await session.capture(demoElement);
+      previewElement.src = screenshot;
+
+      await session.stop();
+    }, 1000);
+  `}
+/>

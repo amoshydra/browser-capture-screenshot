@@ -1,0 +1,59 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { outdent } from "outdent"
+
+interface Props extends HTMLAttributes<'div'> {
+  'data-value': string;
+}
+const props = Astro.props;
+
+const content = [props['data-value'] || ""] as unknown as TemplateStringsArray;
+Object.defineProperty(content, 'raw', { value: content });
+const doc = outdent(content);
+---
+
+<astro-codemirror {...props}>{doc}</astro-codemirror>
+
+
+<script>
+  import { basicSetup, EditorView } from "codemirror";
+  import { javascript } from "@codemirror/lang-javascript"
+
+  export default class AstroCodeMirror extends HTMLElement {
+    public editor: EditorView;
+
+    constructor() {
+      super();
+      this.attachShadow({ mode: 'open' });
+      const root = this.shadowRoot!;
+
+      this.dataset.active = "true";
+
+      const editor = new EditorView({
+        doc: this.textContent || "",
+        extensions: [basicSetup, javascript()],
+        parent: root,
+      });
+
+      this.editor = editor;
+    }
+
+    getValue() {
+      return this.editor.state.doc.toString();
+    }
+  }
+
+  customElements.define('astro-codemirror', AstroCodeMirror);
+</script>
+
+<style>
+astro-codemirror:not([data-active="true"]) {
+  white-space: pre;
+  font-size: 20px;
+  line-height: 28px;
+  padding: 4px 2px 4px 6px;
+  margin-left: 34px;
+  display: inline-block;
+  font-family: monospace;
+}
+</style>

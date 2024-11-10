@@ -1,12 +1,18 @@
 ---
 import Time from "../components/Time.astro";
+import DemoCodeEditor from "../components/DemoCodeEditor.astro";
+
+interface Props extends HTMLAttributes<'div'> {
+  'data-value': string;
+}
+const props = Astro.props;
 ---
 
-<div>
+<astro-demo>
   <div class="columns demo-container">
     <div
       class="demo column"
-      id="demo_demo"
+      data-id="demo_demo"
       contenteditable="true"
       spellcheck="false"
       style="display: flex; flex-direction: column; gap: 1rem;"
@@ -20,80 +26,83 @@ import Time from "../components/Time.astro";
     </div>
     <img
       class="preview column"
-      id="demo_preview"
+      data-id="demo_preview"
       src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
     />
   </div>
-  <pre
-    id="demo_input"
-    spellcheck="false"
-    contenteditable="true"
-    class="input astro-code github-dark"
-    style="background-color:#24292e;color:#e1e4e8;overflow-x:auto"
-    tabindex="0"
-    data-language="ts">
-<code><span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> &#123; captureScreenshot &#125; </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> "browser-capture-screenshot"</span><span style="color:#E1E4E8">;</span></span>
-<span class="line" />
-<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> screenshot</span><span style="color:#F97583"> =</span><span style="color:#F97583"> await</span><span style="color:#B392F0"> captureScreenshot</span><span style="color:#E1E4E8">(demoElement);</span></span>
-<span class="line"><span style="color:#E1E4E8">previewElement.src </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> screenshot;</span></span>
-</code></pre>
-  <div style="text-align: right">
-    <button id="demo_button">Capture screenshot</button>
+  <DemoCodeEditor
+    data-id="demo_input"
+    data-value={props['data-value']}
+  >
+  </DemoCodeEditor>
+  <div style="text-align: right; margin-top: 1rem;">
+    <button data-id="demo_button">Capture screenshot</button>
   </div>
-</div>
+</astro-demo>
 
 <script>
   import * as BrowserCaptureScreenshot from "browser-capture-screenshot";
+  import type AstroCodeMirror from "./DemoCodeEditor.astro.0.mts";
 
-  const elements = {
-    preview: document.getElementById("demo_preview") as HTMLImageElement,
-    input: document.getElementById("demo_input") as HTMLTextAreaElement,
-    button: document.getElementById("demo_button") as HTMLButtonElement,
-  };
+  class AstroDemo extends HTMLElement {
+    connectedCallback() {
+      const elements = {
+        demo: this.querySelector(`[data-id="demo_demo"`) as HTMLDivElement,
+        preview: this.querySelector(`[data-id="demo_preview"`) as HTMLImageElement,
+        input: this.querySelector(`[data-id="demo_input"`) as AstroCodeMirror,
+        button: this.querySelector(`[data-id="demo_button"`) as HTMLButtonElement,
+      };
 
-  elements.button.addEventListener("click", async () => {
-    const inputContent = elements.input.textContent || "";
-    const code = inputContent
-      .split("\n")
-      // remove import line
-      .reduce(
-        (acc, line) => {
-          if (acc.done) {
-            acc.content.push(line);
-            return acc;
-          }
-          if (line.includes(`from "browser-capture-screenshot"`)) {
-            acc.done = true;
-            return acc;
-          }
-          return acc;
-        },
-        { content: [] as string[], done: false },
-      )
-      .content.join("\n");
-    Object.defineProperty(window, "__context", {
-      writable: true,
-      value: {
-        BrowserCaptureScreenshot,
-      },
-    });
+      elements.button.addEventListener("click", async () => {
+        const inputContent = elements.input.getValue();
+    
+        // get code and remove import line
+        const code = inputContent
+          .split("\n")
+          .reduce(
+            (acc, line) => {
+              if (acc.done) {
+                acc.content.push(line);
+                return acc;
+              }
+              if (line.includes(`from "browser-capture-screenshot"`)) {
+                acc.done = true;
+                return acc;
+              }
+              return acc;
+            },
+            { content: [] as string[], done: false },
+          )
+          .content.join("\n");
+    
+        // prepare scope
+        Object.defineProperty(window, "__demo_scope", {
+          writable: true,
+          value: {
+            BrowserCaptureScreenshot,
+            elements,
+          },
+        });
+    
+        // Execute user's code
+        eval(/*javascript*/ `
+          (async({
+            BrowserCaptureScreenshot: {
+              capture,
+              ScreenshotSession,
+            },
+            elements,
+          }) => {
+            const demoElement = elements.demo;
+            const previewElement = elements.preview;
+            ${code}
+          })(window.__demo_scope);
+        `);
+      });
+    }
+  }
 
-    // Execute user's code
-    eval(/*javascript*/ `
-      (async({
-        BrowserCaptureScreenshot: {
-          captureScreenshot,
-          setup,
-          focus,
-          rasterize,
-        },
-      }) => {
-        const demoElement = document.getElementById("demo_demo");
-        const previewElement = document.getElementById("demo_preview");
-        ${code}
-      })(window.__context);
-    `);
-  });
+  customElements.define('astro-demo', AstroDemo);
 </script>
 
 <style>
@@ -117,17 +126,6 @@ import Time from "../components/Time.astro";
     all: unset;
     width: 100%;
   }
-  .input {
-    background-color: #24292e;
-    color: #e1e4e8;
-    overflow-x: auto;
-    font-family: monospace;
-    padding: 1rem;
-    line-height: 1.5;
-    white-space: pre;
-    font-weight: 600;
-  }
-
   button {
     padding: 1rem;
     font-size: 1rem;

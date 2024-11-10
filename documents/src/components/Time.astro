@@ -1,14 +1,24 @@
 <script>
-  const time = document.getElementById("time")!;
-  const render = () => {
-    const d = new Date();
-    time.textContent = d.toLocaleString()
-  };
+  export default class Timer extends HTMLElement {
+    private intervalId: number = 0;
 
-  render();
-  setInterval(() => {
-    render();
-  }, 1000);
+    connectedCallback() {
+      const timerElement = this.querySelector("span")!;
+
+      timerElement.textContent = new Date().toLocaleString();
+      this.intervalId = window.setInterval(() => {
+        timerElement.textContent = new Date().toLocaleString();
+      }, 1000);
+    }
+
+    disconnectedCallback() {
+      clearInterval(this.intervalId);
+    }
+  }
+
+  customElements.define('astro-timer', Timer);
 </script>
 
-<span class="island" id="time" />
+<astro-timer>
+  <span>&nbsp;</span>
+</astro-timer>

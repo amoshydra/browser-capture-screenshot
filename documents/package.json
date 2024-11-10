@@ -14,8 +14,11 @@
     "@astrojs/mdx": "^3.1.9",
     "@astrojs/rss": "^4.0.9",
     "@astrojs/sitemap": "^3.2.1",
+    "@codemirror/lang-javascript": "^6.2.2",
     "astro": "^4.16.10",
     "browser-capture-screenshot": "*",
+    "codemirror": "^6.0.1",
+    "outdent": "^0.8.0",
     "typescript": "^5.6.3"
   }
 }
