@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.0.4](https://github.com/amoshydra/browser-capture-screenshot/compare/v0.0.3...v0.0.4) (2024-11-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* setup, focus and rasterize function are replaces with ScreenshotSession
+
+### Features
+
+* introduce ScreenshotSession class ([4504107](https://github.com/amoshydra/browser-capture-screenshot/commit/45041078517eab55753d2adfcb4a14c0f0800492))
+
+
+### Miscellaneous Chores
+
+* release 0.0.4 ([ef6d89a](https://github.com/amoshydra/browser-capture-screenshot/commit/ef6d89ab50851f94e124d94595026a609c08afa8))
+
 ## 0.0.3 (2024-11-10)
 
 
