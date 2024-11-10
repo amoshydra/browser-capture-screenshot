@@ -43,6 +43,8 @@ import Time from "../components/Time.astro"
 </div>
 
 <script>
+  import * as BrowserCaptureScreenshot from "browser-capture-screenshot";
+
   const elements = {
     preview: document.getElementById("demo_preview") as HTMLImageElement,
     input: document.getElementById("demo_input") as HTMLTextAreaElement,
@@ -74,6 +76,7 @@ import Time from "../components/Time.astro"
     Object.defineProperty(window, "__context", {
       writable: true,
       value: {
+        BrowserCaptureScreenshot,
       },
     });
 
@@ -81,7 +84,10 @@ import Time from "../components/Time.astro"
     eval(/*javascript*/`
       (async({
         BrowserCaptureScreenshot: {
-
+          captureScreenshot,
+          setup,
+          focus,
+          rasterize,
         },
       }) => {
         const demoElement = document.getElementById("demo_demo");
