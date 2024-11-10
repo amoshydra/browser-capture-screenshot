@@ -1,6 +1,7 @@
 ---
 import Time from "../components/Time.astro";
 import DemoCodeEditor from "../components/DemoCodeEditor.astro";
+import type { HTMLAttributes } from "astro/types";
 
 interface Props extends HTMLAttributes<'div'> {
   'data-value': string;
