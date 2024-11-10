@@ -3,7 +3,7 @@
 Browser Capture Screen utilises browser’s [getDisplayMedia](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getDisplayMedia) API to capture screenshot from the page.
 
 ```bash
-npm install browser-capture-screen
+npm install browser-capture-screenshot
 ```
 
 ## Demo
