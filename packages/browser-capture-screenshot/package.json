@@ -6,5 +6,14 @@
   "module": "index.mjs",
   "types": "index.d.ts",
   "author": "amoshydra",
-  "license": "MIT"
+  "license": "MIT",
+  "files": [
+    "index.d.ts",
+    "index.mjs",
+    "lib"
+  ],
+  "scripts": {
+    "publish:package": "npm publish",
+    "prepack": "node scripts/copy-readme.mjs"
+  }
 }

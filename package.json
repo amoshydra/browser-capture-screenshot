@@ -7,7 +7,8 @@
   "license": "MIT",
   "scripts": {
     "start": "yarn workspace documents run start",
-    "build:doc": "yarn workspace documents run build"
+    "build:doc": "yarn workspace documents run build",
+    "publish:package": "yarn workspace browser-capture-screenshot run publish:package"
   },
   "workspaces": [
     "packages/browser-capture-screenshot",
