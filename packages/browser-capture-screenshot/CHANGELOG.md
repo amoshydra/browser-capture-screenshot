@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.0](https://github.com/amoshydra/browser-capture-screenshot/compare/v0.0.4...v0.1.0) (2024-11-10)
+
+
+### Miscellaneous Chores
+
+* release 0.0.4 ([a9ea9a3](https://github.com/amoshydra/browser-capture-screenshot/commit/a9ea9a3964132281e88aeaab466b7d5a938d1f6e))
+* release 0.1.0 ([ae2cf4d](https://github.com/amoshydra/browser-capture-screenshot/commit/ae2cf4df6eb226c8267bd7c825f18397f5730aef))
+
 ## [0.0.4](https://github.com/amoshydra/browser-capture-screenshot/compare/v0.0.4...v0.0.4) (2024-11-10)
 
 
