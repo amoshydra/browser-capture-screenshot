@@ -5,15 +5,32 @@
   "main": "index.mjs",
   "module": "index.mjs",
   "types": "index.d.ts",
-  "author": "amoshydra",
+  "author": "amoshydra <8733840+amoshydra@users.noreply.github.com>",
   "license": "MIT",
   "files": [
     "index.d.ts",
     "index.mjs",
     "lib"
   ],
+  "homepage": "https://github.com/amoshydra/browser-capture-screenshot",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:amoshydra/browser-capture-screenshot.git"
+  },
   "scripts": {
     "publish:package": "npm publish",
     "prepack": "node scripts/copy-readme.mjs"
-  }
+  },
+  "keywords": [
+    "browser capture screenshot",
+    "screenshot",
+    "element screenshot",
+    "region capture",
+    "element capture",
+    "getdisplaymedia",
+    "prefercurrenttab",
+    "croptarget",
+    "browsercapturemediastreamtrack",
+    "amoshydra"
+  ]
 }

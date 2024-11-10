@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "main": "index.js",
   "private": true,
-  "author": "amoshydra",
+  "author": "amoshydra <8733840+amoshydra@users.noreply.github.com>",
   "license": "MIT",
   "scripts": {
     "start": "yarn workspace documents run start",

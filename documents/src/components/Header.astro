@@ -1,9 +1,41 @@
 ---
-import { SITE_TITLE } from '../consts';
+import { SITE_TITLE } from "../consts";
+
+
+const packageId = "browser-capture-screenshot";
+const badges = [
+  {
+    label: `Github Repository`,
+    image: `https://img.shields.io/badge/amoshydra-${packageId.replace(/-/g, '--')}-black?style=flat&logo=github`,
+    href: `https://github.com/amoshydra/${packageId}`,
+  },
+  {
+    label: `NPM Version`,
+    image: `https://img.shields.io/npm/v/${packageId}`,
+    href: `https://www.npmjs.com/package/${packageId}`,
+  },
+  {
+    label: `npm bundle size`,
+    image: `https://img.shields.io/bundlephobia/minzip/${packageId}`,
+    href: `https://www.npmjs.com/package/${packageId}?activeTab=code`,
+  },
+  {
+    label: `GitHub License`,
+    image: `https://img.shields.io/github/license/amoshydra/${packageId}`,
+    href: `https://github.com/amoshydra/${packageId}/blob/main/LICENSE`,
+  },
+];
 ---
 
 <header>
   <h1>{SITE_TITLE}</h1>
+  <div class="badge-container">
+    {
+      badges.map((badge) => (
+        <a href={badge.href}><img src={badge.image} alt={badge.label} /></a>
+      ))
+    }
+  </div>
 </header>
 <style>
   header {
@@ -14,5 +46,16 @@ import { SITE_TITLE } from '../consts';
   h1 {
     font-weight: bold;
     margin: 0;
+  }
+  .badge-container {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;;
+
+    > img {
+      height: 1.25rem;
+    }
   }
 </style>
