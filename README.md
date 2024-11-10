@@ -20,10 +20,28 @@ See demo at [https://amoshydra.github.io/browser-capture-screenshot](https://amo
 ## Usage
 
 ```ts
-import { captureScreenshot } from "browser-capture-screenshot";
+import { capture } from "browser-capture-screenshot";
 
-const screenshot = await captureScreenshot(demoElement);
+const screenshot = await capture(demoElement);
 previewElement.src = screenshot;
+```
+
+`ScreenshotSession` provides more granular controls:
+
+```ts
+import { ScreenshotSession } from "browser-capture-screenshot";
+
+const session = new ScreenshotSession();
+
+await session.start();
+
+// capture screenshot 1 second later
+setTimeout(async () => {
+  const screenshot = await session.capture(demoElement);
+  previewElement.src = screenshot;
+
+  await session.stop();
+}, 1000);
 ```
 
 ## Compatibility

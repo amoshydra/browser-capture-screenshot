@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "ES2022",
+    "noImplicitAny": true,
+    "checkJs": true,
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "DOM.AsyncIterable",
+    ],
+    "strict": true
+  },
+  "include": [
+    "index.mjs",
+    "index.d.ts",
+    "lib/**/*",
+    "shim/**/*",
+  ]
+}
