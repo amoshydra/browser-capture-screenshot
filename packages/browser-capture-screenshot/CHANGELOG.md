@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.2](https://github.com/amoshydra/browser-capture-screenshot/compare/v0.1.1...v0.1.2) (2024-11-12)
+
+
+### Bug Fixes
+
+* declare export type manually ([3dfb397](https://github.com/amoshydra/browser-capture-screenshot/commit/3dfb397063d0b7b3cdd7e4ffb80db2d2fcc1194a))
+
 ## [0.1.1](https://github.com/amoshydra/browser-capture-screenshot/compare/v0.1.0...v0.1.1) (2024-11-10)
 
 
