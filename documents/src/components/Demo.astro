@@ -37,7 +37,10 @@ const props = Astro.props;
   >
   </DemoCodeEditor>
   <div style="text-align: right; margin-top: 1rem;">
-    <button data-id="demo_button">Capture screenshot</button>
+    <div>
+      <button data-id="demo_button">Capture screenshot</button>
+      <div data-id="demo_support-message" data-supported="false"><small style="color: red">Your browser is not compatible</small></div>
+    </div>
   </div>
 </astro-demo>
 
@@ -52,7 +55,12 @@ const props = Astro.props;
         preview: this.querySelector(`[data-id="demo_preview"`) as HTMLImageElement,
         input: this.querySelector(`[data-id="demo_input"`) as AstroCodeMirror,
         button: this.querySelector(`[data-id="demo_button"`) as HTMLButtonElement,
+        supportMessage: this.querySelector(`[data-id="demo_support-message"`) as HTMLDivElement,
       };
+
+      if (BrowserCaptureScreenshot.ScreenshotSession.isSupported()) {
+        elements.supportMessage.dataset.supported = "true";
+      }
 
       elements.button.addEventListener("click", async () => {
         const inputContent = elements.input.getValue();
@@ -131,5 +139,8 @@ const props = Astro.props;
     padding: 1rem;
     font-size: 1rem;
     font-weight: 600;
+  }
+  [data-supported="true"] {
+    display: none;
   }
 </style>
