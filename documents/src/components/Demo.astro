@@ -40,6 +40,10 @@ const props = Astro.props;
     <div>
       <button data-id="demo_button">Capture screenshot</button>
       <div data-id="demo_support-message" data-supported="false"><small style="color: red">Your browser is not compatible</small></div>
+      <div>
+        <small data-id="demo_error-message" style="color: red"></small>
+      </div>
+
     </div>
   </div>
 </astro-demo>
@@ -56,6 +60,7 @@ const props = Astro.props;
         input: this.querySelector(`[data-id="demo_input"`) as AstroCodeMirror,
         button: this.querySelector(`[data-id="demo_button"`) as HTMLButtonElement,
         supportMessage: this.querySelector(`[data-id="demo_support-message"`) as HTMLDivElement,
+        errorMessage: this.querySelector(`[data-id="demo_error-message"`) as HTMLSpanElement,
       };
 
       if (BrowserCaptureScreenshot.ScreenshotSession.isSupported()) {
@@ -64,6 +69,7 @@ const props = Astro.props;
 
       elements.button.addEventListener("click", async () => {
         const inputContent = elements.input.getValue();
+        elements.errorMessage.textContent = "";
     
         // get code and remove import line
         const code = inputContent
@@ -105,7 +111,12 @@ const props = Astro.props;
             const demoElement = elements.demo;
             const previewElement = elements.preview;
             ${code}
-          })(window.__demo_scope);
+          })(window.__demo_scope)
+          .catch((error) => {
+            elements.errorMessage.textContent = error.message;
+            throw error;
+          })
+        ;
         `);
       });
     }
