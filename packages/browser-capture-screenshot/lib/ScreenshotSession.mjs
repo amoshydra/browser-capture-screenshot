@@ -1,6 +1,6 @@
 const isSupported = (
   typeof BrowserCaptureMediaStreamTrack === "function" &&
-  typeof CropTarget === "function"
+  typeof RestrictionTarget == "function"
 );
 
 export class ScreenshotSession {
@@ -81,8 +81,8 @@ export class ScreenshotSession {
    * @return {Promise<string>}
    */
   async capture(element) {
-    const cropTarget = await CropTarget.fromElement(element);
-    await this.track.cropTo(cropTarget);
+    const restrictionTarget = await RestrictionTarget.fromElement(element);
+    await this.track.restrictTo(restrictionTarget);
 
     return await drawStreamToImageDataUrl(element, this.stream);
   }
