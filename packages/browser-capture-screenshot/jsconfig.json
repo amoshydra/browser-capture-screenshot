@@ -3,7 +3,9 @@
     "module": "ES2022",
     "noImplicitAny": true,
     "checkJs": true,
+    "types": [],
     "lib": [
+      "ESNext",
       "DOM",
       "DOM.Iterable",
       "DOM.AsyncIterable",
