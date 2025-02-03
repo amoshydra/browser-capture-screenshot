@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.2.0](https://github.com/amoshydra/browser-capture-screenshot/compare/v0.1.2...v0.2.0) (2025-02-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* underlying API uses Element Capture API
+
+### Features
+
+* replace RegionCapture API with ElementCapture ([ffcbea4](https://github.com/amoshydra/browser-capture-screenshot/commit/ffcbea45cda5c3136f89ceb77e6fde2638e68cf8))
+* throw error if capture does not happen within 1 second ([313f2b3](https://github.com/amoshydra/browser-capture-screenshot/commit/313f2b3aa118342e7bf381ce87c8547862d0a52b))
+
 ## [0.1.2](https://github.com/amoshydra/browser-capture-screenshot/compare/v0.1.1...v0.1.2) (2024-11-12)
 
 
