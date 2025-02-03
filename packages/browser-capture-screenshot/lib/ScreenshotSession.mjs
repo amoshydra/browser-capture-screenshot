@@ -105,7 +105,14 @@ export const drawStreamToImageDataUrl = async(element, stream) => {
   
     video = document.createElement("video");
     video.srcObject = stream;
-    await video.play();
+
+    const playbackPromise = video.play();
+
+    await withTimeout(
+      () => playbackPromise,
+      1000,
+      () => new Error("Unable to capture. Element may not be eligible for restriction.")
+    );
 
     canvas = document.createElement("canvas");
     canvas.width = sourceWidth;
@@ -124,4 +131,24 @@ export const drawStreamToImageDataUrl = async(element, stream) => {
     canvas?.remove();
     video?.remove();
   }
+}
+
+/**
+ * @template T
+ * @param {() => Promise<T>} fn 
+ * @param {number} timeout 
+ * @param {() => Error} errorFn 
+ */
+const withTimeout = (fn, timeout, errorFn) => {
+  let timeoutId = 0;
+
+  return Promise.race([
+    new Promise((resolve, reject) => {
+      timeoutId = setTimeout(() => reject(errorFn()), timeout)
+    }),
+    fn()
+      .then(() => {
+        clearTimeout(timeoutId)
+      }),
+  ]);
 }
