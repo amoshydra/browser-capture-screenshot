@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/amoshydra/browser-capture-screenshot/compare/v0.2.0...v0.2.1) (2025-02-03)
+
+
+### Features
+
+* support both Element and Region capture ([0ffa10b](https://github.com/amoshydra/browser-capture-screenshot/commit/0ffa10b3f4ef72b9e12e52396ded21c38c0c8352))
+
 ## [0.2.0](https://github.com/amoshydra/browser-capture-screenshot/compare/v0.1.2...v0.2.0) (2025-02-03)
 
 
