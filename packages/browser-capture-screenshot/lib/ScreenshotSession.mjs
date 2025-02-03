@@ -1,5 +1,6 @@
 const isSupported = (
   typeof BrowserCaptureMediaStreamTrack === "function" &&
+  typeof CropTarget == "function" &&
   typeof RestrictionTarget == "function"
 );
 
@@ -20,6 +21,9 @@ export class ScreenshotSession {
     this._stream = null;
   }
 
+  /**
+   * Prompt user to grant permission to capture the current tab.
+   */
   async start() {
     if (this._track) return;
 
@@ -66,6 +70,9 @@ export class ScreenshotSession {
     this._track = track;
   }
 
+  /**
+   * Revoke permission to capture current tab. Remove existing capture stream.
+   */
   stop() {
     const track = this._track;
     if (track) {
@@ -77,12 +84,29 @@ export class ScreenshotSession {
   }
 
   /**
-   * @param {HTMLElement} element 
+   * Capture screenshot of the given element and return a base64 string representation of the screenshot.
+   * 
+   * @param {HTMLElement} element
+   * @param {import("../index").CaptureOptions=} options
    * @return {Promise<string>}
    */
-  async capture(element) {
-    const restrictionTarget = await RestrictionTarget.fromElement(element);
-    await this.track.restrictTo(restrictionTarget);
+  async capture(element, options) {
+    switch (options?.api) {
+      case "element":
+      case undefined: {
+        const restrictionTarget = await RestrictionTarget.fromElement(element);
+        await this.track.restrictTo(restrictionTarget);
+        break;
+      }
+      case "region": {
+        const cropTarget = await CropTarget.fromElement(element);
+        await this.track.cropTo(cropTarget);
+        break;
+      }
+      default: {
+        throw new Error(`invalid option passed to api. Valid options are one of: "element", "region"`)
+      }
+    }
 
     return await drawStreamToImageDataUrl(element, this.stream);
   }
@@ -93,7 +117,7 @@ export class ScreenshotSession {
  * @param {MediaStream} stream 
  * @returns {Promise<string>}
  */
-export const drawStreamToImageDataUrl = async(element, stream) => {
+const drawStreamToImageDataUrl = async(element, stream) => {
   let canvas = null;
   let video = null;
 
@@ -152,3 +176,5 @@ const withTimeout = (fn, timeout, errorFn) => {
       }),
   ]);
 }
+
+

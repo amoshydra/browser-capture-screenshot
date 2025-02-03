@@ -5,7 +5,7 @@ description: 'Lorem ipsum dolor sit amet'
 heroImage: '/blog-placeholder-5.jpg'
 ---
 
-Browser Capture Screenshot utilises the [Element Capture API](https://screen-share.github.io/element-capture) to capture screenshot of a given Element from the page.
+Browser Capture Screenshot utilises [Element Capture API](https://screen-share.github.io/element-capture) or [Region Capture API](https://github.com/w3c/mediacapture-region/#summary) to capture screenshot of a given Element from the page.
 
 ```bash
 npm install browser-capture-screen
@@ -47,6 +47,48 @@ import Demo from "../components/Demo.astro";
   `}
 />
 
+## API
+
+### `capture`
+
+A simplified API for capturing screenshot. This method uses `ScreenshotSession` internally.
+
+```ts
+export function capture(element: HTMLElement, options?: CaptureOptions): Promise<string>
+```
+
+#### return
+
+A base64 encoded string representing the captured image wrapped in a Promise. e.g.: `data:image/png;base64,iVBORw0K...`.
+
+#### param `element`
+
+The element `HTMLElement` to take screenshot of.
+
+#### param `options`
+
+optional.
+
+##### param `options.api`
+
+optional. Specify how the screenshot should be captured.
+
+- `{ api: "element" }` - uses Element Capture API
+- `{ api: "region" }` - uses Region Capture API
+
+Default to using Element Capture API when not specified.
+
+### `ScreenshotSession`
+
+```ts
+export class ScreenshotSession {
+  static isSupported(): boolean;
+  start(): Promise<void>
+  stop()
+  capture(element: HTMLElement, options?: CaptureOptions): Promise<string>
+}
+```
+
 ## Compatibility
 
 This implementation requires the browser to support the following experimental API:
@@ -57,6 +99,7 @@ This implementation requires the browser to support the following experimental A
 
 ## Notes:
 - When using Element Capture API:
+  - requires >= Chrome 132
   - the target element need to be [eligible for restriction](https://screen-share.github.io/element-capture/#elements-eligible-for-restriction)
   - the target element by default has a black background. If your element is tranparent, it will blend with a black background.
   - The following style can be used with Element Capture API:
