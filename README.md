@@ -52,15 +52,15 @@ This implementation requires the browser to support the following experimental A
 - [`CropTarget.fromElement()`](https://w3c.github.io/mediacapture-region/#dom-croptarget-fromelement) and [BrowserCaptureMediaStreamTrack.cropTo](https://w3c.github.io/mediacapture-region/#dom-browsercapturemediastreamtrack-cropto)
 - [`RestrictionTarget.fromElement()`](https://screen-share.github.io/element-capture/#dom-restrictiontarget-fromelement) and [BrowserCaptureMediaStreamTrack.restrictTo](https://screen-share.github.io/element-capture/#dom-browsercapturemediastreamtrack-restrictto)
 
-## Known issues:
+## Notes:
 - When using Element Capture API:
   - the target element need to be [eligible for restriction](https://screen-share.github.io/element-capture/#elements-eligible-for-restriction)
-  - the target element by default have a black background. If your element is tranparent, it will blend with a black background.
-  - The following style is commonly used with using Element Capture API:
+  - the target element by default has a black background. If your element is tranparent, it will blend with a black background.
+  - The following style can be used with Element Capture API:
       ```css
       .target {
-        background-color: white;
-        isolation: isolate;
+        background-color: white; /* provide a background */
+        isolation: isolate; /* make target eligible for restriction */
       }
       ``` 
 - The capture region need to be visible in the viewport
